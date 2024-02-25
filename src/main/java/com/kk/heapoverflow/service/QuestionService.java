@@ -1,15 +1,15 @@
 package com.kk.heapoverflow.service;
 
+import com.kk.heapoverflow.dto.*;
 import com.kk.heapoverflow.model.*;
-import org.springframework.stereotype.*;
+import org.springframework.data.domain.*;
 
 import java.util.*;
 
-@Service
 public interface QuestionService {
     Question createQuestion(QuestionRequestDto questionRequestDto);
 
-    List<Question> getAllQuestions();
+    Page<Question> getAllQuestions(Pageable pageable);
 
     Question getQuestionById(Long questionId);
 

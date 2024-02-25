@@ -15,17 +15,9 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name = "answer")
-public class Answer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Answer extends BaseModel {
     @Column(nullable = false)
     private String content;
-
-    @Column(nullable = false)
-    private Date createdAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

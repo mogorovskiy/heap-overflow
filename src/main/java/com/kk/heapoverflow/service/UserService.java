@@ -1,11 +1,10 @@
 package com.kk.heapoverflow.service;
 
+import com.kk.heapoverflow.dto.*;
 import com.kk.heapoverflow.model.*;
-import org.springframework.stereotype.*;
 
 import java.util.*;
 
-@Service
 public interface UserService {
     User createUser(UserRequestDto userRequestDto);
 

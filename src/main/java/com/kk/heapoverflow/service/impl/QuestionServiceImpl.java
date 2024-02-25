@@ -1,9 +1,12 @@
 package com.kk.heapoverflow.service.impl;
 
+import com.kk.heapoverflow.dto.*;
+import com.kk.heapoverflow.mapper.*;
 import com.kk.heapoverflow.model.*;
 import com.kk.heapoverflow.repostitory.*;
 import com.kk.heapoverflow.service.*;
 import lombok.*;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 
 import java.util.*;
@@ -21,8 +24,8 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> getAllQuestions() {
-        return questionRepository.findAll();
+    public Page<Question> getAllQuestions(Pageable pageable) {
+        return questionRepository.findAll(pageable);
     }
 
     @Override

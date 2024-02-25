@@ -1,6 +1,7 @@
 package com.kk.heapoverflow.controller;
 
 
+import com.kk.heapoverflow.dto.*;
 import com.kk.heapoverflow.model.*;
 import com.kk.heapoverflow.service.*;
 import lombok.*;
@@ -9,11 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 

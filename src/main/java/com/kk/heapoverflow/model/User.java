@@ -9,12 +9,7 @@ import java.sql.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "user")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class User extends BaseModel {
     @Column(nullable = false)
     private String firstName;
 
@@ -26,7 +21,4 @@ public class User {
 
     @Column(nullable = false)
     private String password;
-
-    @Column(nullable = false)
-    private Date createdAt;
 }

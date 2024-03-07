@@ -32,8 +32,8 @@ public class QuestionController {
         log.info("Get question by id: {}", id);
         return questionService.getQuestionById(id);
     }
-/*
 
+/*
     @PostMapping("/update")
     public Question update(@RequestParam Long questionId, @RequestBody QuestionRequestDto questionRequestDto) {
         log.info("Update question: {}", questionId);

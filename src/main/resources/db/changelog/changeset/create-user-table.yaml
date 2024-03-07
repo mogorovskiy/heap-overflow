@@ -41,3 +41,6 @@ databaseChangeLog:
                   type: varbinary(255)
                   constraints:
                     nullable: false
+              - column:
+                  name: profile_photo_url
+                  type: VARCHAR(255)

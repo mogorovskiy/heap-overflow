@@ -1,13 +1,13 @@
-package com.kk.heapoverflow.dto.user;
+package com.kk.heapoverflow.dto.user.request;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
 public class UserRegistrationRequestDto {
+    @Email
     private String email;
 
     @NotBlank

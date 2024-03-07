@@ -1,11 +1,13 @@
 package com.kk.heapoverflow.service.impl;
 
-import com.kk.heapoverflow.dto.*;
+import com.kk.heapoverflow.dto.user.request.*;
+import com.kk.heapoverflow.dto.user.response.*;
 import com.kk.heapoverflow.mapper.*;
 import com.kk.heapoverflow.model.*;
 import com.kk.heapoverflow.repostitory.*;
 import com.kk.heapoverflow.service.*;
 import lombok.*;
+import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;
 
 import java.util.*;
@@ -14,12 +16,24 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
 
     @Override
-    public User createUser(UserRequestDto userRequestDto) {
-        User user = userMapper.toModel(userRequestDto);
-        return userRepository.save(user);
+    public UserResponseDto register(UserRegistrationRequestDto request) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new RuntimeException("User already exists with such email: " + request.getEmail());
+        }
+
+        User user = new User();
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setEmail(request.getEmail());
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setProfilePhotoUrl(request.getProfilePhotoUrl());
+        User savedUser = userRepository.save(user);
+
+        return userMapper.toDto(savedUser);
     }
 
     @Override

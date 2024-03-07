@@ -1,7 +1,7 @@
 package com.kk.heapoverflow.security;
 
 import com.kk.heapoverflow.dto.auth.*;
-import com.kk.heapoverflow.dto.user.*;
+import com.kk.heapoverflow.dto.user.request.*;
 import com.kk.heapoverflow.repostitory.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

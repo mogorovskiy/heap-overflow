@@ -8,7 +8,6 @@ import java.time.*;
 
 @Getter
 @Setter
-@SuperBuilder
 @MappedSuperclass
 @NoArgsConstructor
 public class BaseModel {

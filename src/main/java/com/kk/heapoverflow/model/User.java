@@ -25,6 +25,8 @@ public class User extends BaseModel implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    private String profilePhotoUrl;
+
     private Set<Role> roles = new HashSet<>();
 
     @Override

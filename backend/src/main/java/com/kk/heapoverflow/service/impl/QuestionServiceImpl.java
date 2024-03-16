@@ -1,6 +1,7 @@
 package com.kk.heapoverflow.service.impl;
 
-import com.kk.heapoverflow.dto.*;
+import com.kk.heapoverflow.dto.question.request.*;
+import com.kk.heapoverflow.dto.question.response.*;
 import com.kk.heapoverflow.mapper.*;
 import com.kk.heapoverflow.model.*;
 import com.kk.heapoverflow.repostitory.*;
@@ -9,6 +10,7 @@ import lombok.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 
+import java.time.*;
 import java.util.*;
 
 @Service
@@ -18,14 +20,18 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionMapper questionMapper;
 
     @Override
-    public Question createQuestion(QuestionRequestDto questionRequestDto) {
-        Question question = questionMapper.toModel(questionRequestDto);
-        return questionRepository.save(question);
+    public QuestionResponseDto createQuestion(CreateQuestionRequestDto createQuestionRequestDto, User user) {
+        Question question = questionMapper.toModel(createQuestionRequestDto);
+        question.setUser(user);
+        question.setCreatedAt(LocalDateTime.now());
+        question.setViews(0L);
+        return questionMapper.toDto(questionRepository.save(question));
     }
 
     @Override
-    public Page<Question> getAllQuestions(Pageable pageable) {
-        return questionRepository.findAll(pageable);
+    public Page<QuestionResponseDto> getAllQuestions(Pageable pageable) {
+        return questionRepository.findAll(pageable)
+                .map(questionMapper::toDto);
     }
 
     @Override

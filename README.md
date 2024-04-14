@@ -44,6 +44,9 @@
 
 ### Frontend:
 ![react](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![gatsby](https://img.shields.io/badge/Gatsby-FF7A55?style=for-the-badge&logo=gatsby&logoColor=white)
+![graphql](https://img.shields.io/badge/GraphQL-7A79DF?style=for-the-badge&logo=graphql&logoColor=white)
+![elasticsearch](https://img.shields.io/badge/Elasticsearch-3EBEB0?style=for-the-badge&logo=elasticsearch&logoColor=white)
 ![typescript](https://img.shields.io/badge/Typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
 ![router](https://img.shields.io/badge/React%20Router-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white)

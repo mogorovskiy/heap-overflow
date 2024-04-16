@@ -1,11 +1,11 @@
 package com.kk.heapoverflow.controller;
 
-import com.kk.heapoverflow.dto.auth.*;
-import com.kk.heapoverflow.dto.user.request.*;
-import com.kk.heapoverflow.dto.user.response.*;
-import com.kk.heapoverflow.model.*;
-import com.kk.heapoverflow.security.*;
-import com.kk.heapoverflow.service.*;
+import com.kk.heapoverflow.dto.auth.JwtAuthenticationResponse;
+import com.kk.heapoverflow.dto.user.request.UserLoginRequestDto;
+import com.kk.heapoverflow.dto.user.request.UserRegistrationRequestDto;
+import com.kk.heapoverflow.dto.user.response.UserResponseDto;
+import com.kk.heapoverflow.security.AuthenticationService;
+import com.kk.heapoverflow.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,6 +1,6 @@
 package com.kk.heapoverflow.config.handler;
 
-import com.kk.heapoverflow.dto.*;
+import com.kk.heapoverflow.dto.ErrorResponse;
 import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;

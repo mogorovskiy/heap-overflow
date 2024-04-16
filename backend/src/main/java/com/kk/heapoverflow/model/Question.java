@@ -21,6 +21,6 @@ public class Question extends BaseModel {
     private Long views;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
 }

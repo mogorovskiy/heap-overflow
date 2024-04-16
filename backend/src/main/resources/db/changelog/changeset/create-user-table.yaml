@@ -37,10 +37,5 @@ databaseChangeLog:
                   type: TIMESTAMP
                   defaultValueComputed: CURRENT_TIMESTAMP
               - column:
-                  name: roles
-                  type: varbinary(255)
-                  constraints:
-                    nullable: false
-              - column:
                   name: profile_photo_url
                   type: VARCHAR(255)

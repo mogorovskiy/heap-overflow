@@ -20,6 +20,10 @@ export default function QuestionsPage() {
             <QuestionPreview />
             <QuestionPreview />
             <QuestionPreview />
+            <QuestionPreview />
+            <QuestionPreview />
+            <QuestionPreview />
+            <QuestionPreview />
         </div>
     </div>;
 

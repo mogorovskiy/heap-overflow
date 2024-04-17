@@ -1,7 +1,7 @@
 export default function QuestionPreview() {
     return (
         <div className="border-t">
-            <div className="flex flex-row gap-x-3 py-2">
+            <div className="flex flex-row gap-x-3 py-3">
                 <div className="flex flex-col text-secondary small text-end pl-12 py-2">
                     <div>
                         <span className="mr-1">15</span>

@@ -1,6 +1,6 @@
 # Heap Overflow forum
 
-[logo](assets/img/logo.png)
+![logo](assets/img/logo.png)
 
 ## Description
 

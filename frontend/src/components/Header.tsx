@@ -18,8 +18,8 @@ export default function Header() {
                         </div>
                     </a>
 
-                    <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                        <li><a href={PAGES.questions} className="nav-link px-2 link-body-emphasis">Questions</a></li>
+                    <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 small">
+                        <li><a href={PAGES.questions} className="nav-link px-2 text-muted">Questions</a></li>
                     </ul>
 
                     <form className="flex-1 mx-3" role="search">

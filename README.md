@@ -1,5 +1,7 @@
 # Heap Overflow forum
 
+[logo](assets/img/logo.png)
+
 ## Description
 
 
@@ -21,7 +23,15 @@
 
 ## Installation
 
-
+1. Clone this repo using `git clone <URL>`
+2. Ensure that Java 17+ and MySQL are installed
+3. Fill out MySQL username and password in `resources/application.properties`
+   and `resources/liquibase.properties`
+4. Google OAuth client-id is required. Instruction about how it obtain: https://developers.google.com/identity/oauth2/web/guides/get-google-api-clientid
+5. Grab your client-id and put it to the `application.properties`
+6. In your frontend root folder, create `.env` file from `.env.sample`
+7. Start backend API
+8. Run frontend React app by `cd frontend` and `npm run start` or build optimized production build by running `npm run build`
 
 ## Usage
 

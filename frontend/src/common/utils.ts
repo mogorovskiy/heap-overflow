@@ -43,3 +43,11 @@ export function calcHowLongAgoWasCreated(createdDatetime: string): string {
     }
     return date.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' });
 }
+
+export function createNumberList(to: number): number[] {
+    let list = [];
+    for (let i = 0; i < to; i++) {
+        list.push(i);
+    }
+    return list;
+}

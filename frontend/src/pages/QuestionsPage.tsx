@@ -1,6 +1,7 @@
 import PageWithHeader from "./PageWithHeader";
 import QuestionPreview from "../components/QuestionPreview";
 import {QuestionPreviewPageableDto} from "../common/types/pageable/QuestionPreviewPageableDto";
+import Pagination from "../components/pagination/Pagination";
 
 const response: QuestionPreviewPageableDto = {
     total: 100,
@@ -252,6 +253,8 @@ const response: QuestionPreviewPageableDto = {
 };
 
 export default function QuestionsPage() {
+    const handlePageClick = () => {console.log("clicked some pagination button")};
+
     const contentElement = <div className="text-center col-7 mx-auto border-l">
         <div className="px-4">
             <div className="flex flex-row justify-content-between py-4">
@@ -268,6 +271,9 @@ export default function QuestionsPage() {
         </div>
         <div className="col">
             {response.data.map((q, i) => <QuestionPreview key={i} data={q} />)}
+        </div>
+        <div className="my-3">
+            <Pagination pagesAmount={response.pagesAmount} currentPage={response.currentPage} onClickCallback={handlePageClick}/>
         </div>
     </div>;
 

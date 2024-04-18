@@ -1,3 +1,11 @@
+// Returns:
+// "35 mins ago",
+// "1 hour ago",
+// "2 hours ago",
+// "Yesterday",
+// "2 days ago",
+// "Mar 17 at 14:08" if its in this year,
+// "May 29, 2023 at 13:09" if in prev years
 export function calcHowLongAgoWasCreated(createdDatetime: string): string {
     const date = new Date(createdDatetime);
     const now = new Date();

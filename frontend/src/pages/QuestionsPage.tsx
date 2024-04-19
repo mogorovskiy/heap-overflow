@@ -2,6 +2,8 @@ import PageWithHeader from "./PageWithHeader";
 import QuestionPreview from "../components/QuestionPreview";
 import {QuestionPreviewPageableDto} from "../common/types/pageable/QuestionPreviewPageableDto";
 import Pagination from "../components/pagination/Pagination";
+import { useSearchParams } from 'react-router-dom';
+import {useState} from "react";
 
 const response: QuestionPreviewPageableDto = {
     total: 100,
@@ -133,7 +135,25 @@ const response: QuestionPreviewPageableDto = {
 };
 
 export default function QuestionsPage() {
-    const handlePageClick = () => {console.log("clicked some pagination button")};
+    const DEFAULT_PAGE = 1;
+    const PAGE_SEARCH_PARAMS_KEY = "page";
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const pageNumberFromSearchParams = searchParams.get(PAGE_SEARCH_PARAMS_KEY);
+    const [currentPageNumber, setCurrentPageNumber] =
+        useState(pageNumberFromSearchParams ? Number(pageNumberFromSearchParams) : DEFAULT_PAGE);
+
+    const handlePageClick = (pageNumber: number) => {
+        console.log(`clicked pagination button #${pageNumber}`);
+
+        if (pageNumber === currentPageNumber || pageNumber < DEFAULT_PAGE || pageNumber > response.pagesAmount) {
+            console.warn(`Invalid target page ${pageNumber} - ignoring`);
+            return;
+        }
+        searchParams.set(PAGE_SEARCH_PARAMS_KEY, ""+pageNumber);
+        setSearchParams(searchParams);
+        setCurrentPageNumber(pageNumber);
+    };
 
     const contentElement = <div className="text-center col-7 mx-auto border-l">
         <div className="px-4">
@@ -153,7 +173,7 @@ export default function QuestionsPage() {
             {response.data.map((q, i) => <QuestionPreview key={i} data={q} />)}
         </div>
         <div className="my-3">
-            <Pagination pagesAmount={response.pagesAmount} currentPage={response.currentPage} onClickCallback={handlePageClick}/>
+            <Pagination pagesAmount={response.pagesAmount} currentPage={currentPageNumber} onClickCallback={handlePageClick}/>
         </div>
     </div>;
 

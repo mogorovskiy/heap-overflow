@@ -11,7 +11,7 @@ export default function Pagination({pagesAmount, currentPage, onClickCallback}: 
     const START_PAGE = 1;
     const MAX_CONSECUTIVE_BUTTONS = 5;
 
-    const currentPageNormalized = currentPage + START_PAGE;
+    const currentPageNormalized = currentPage;
     const pageButtons: number[] = [];
 
     if (currentPageNormalized < MAX_CONSECUTIVE_BUTTONS) {

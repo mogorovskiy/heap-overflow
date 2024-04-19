@@ -29,7 +29,6 @@ export default function Pagination({pagesAmount, currentPage, onClickCallback}: 
     for (let i = 0; i < pageButtons.length; i++) {
         if (i > 0 && pageButtons[i] - pageButtons[i - 1] > 1) {
             buttons.push(<span key={keyCounter++}>...</span>);
-            console.log('booom');
         }
         buttons.push(<PaginationButton key={keyCounter++} pageNumber={pageButtons[i]} currentPage={currentPageNormalized}
                                        onClickCallback={() => onClickCallback(pageButtons[i])} />);

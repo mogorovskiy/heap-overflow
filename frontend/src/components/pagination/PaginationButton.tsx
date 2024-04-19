@@ -14,6 +14,6 @@ export default function PaginationButton({pageNumber, currentPage, onClickCallba
                     style={pageNumber === currentPage
                         ? currentPageButtonStyle
                         : buttonStyle}>
-        {pageNumber+1}
+        {pageNumber}
     </button>);
 }

@@ -4,6 +4,7 @@ import {QuestionPreviewPageableDto} from "../common/types/pageable/QuestionPrevi
 import Pagination from "../components/pagination/Pagination";
 import { useSearchParams } from 'react-router-dom';
 import {useState} from "react";
+import PaginationButton from "../components/pagination/PaginationButton";
 
 const response: QuestionPreviewPageableDto = {
     total: 100,
@@ -137,15 +138,17 @@ const response: QuestionPreviewPageableDto = {
 export default function QuestionsPage() {
     const DEFAULT_PAGE = 1;
     const PAGE_SEARCH_PARAMS_KEY = "page";
+    const PAGE_SIZE_SEARCH_PARAMS_KEY = "size";
+    const SIZE_OPTIONS = [15, 30, 50];
+
     const [searchParams, setSearchParams] = useSearchParams();
 
     const pageNumberFromSearchParams = searchParams.get(PAGE_SEARCH_PARAMS_KEY);
     const [currentPageNumber, setCurrentPageNumber] =
         useState(pageNumberFromSearchParams ? Number(pageNumberFromSearchParams) : DEFAULT_PAGE);
+    const [pageSize, setPageSize] = useState(SIZE_OPTIONS[0]);
 
-    const handlePageClick = (pageNumber: number) => {
-        console.log(`clicked pagination button #${pageNumber}`);
-
+    const handlePageNumberClick = (pageNumber: number) => {
         if (pageNumber === currentPageNumber || pageNumber < DEFAULT_PAGE || pageNumber > response.pagesAmount) {
             console.warn(`Invalid target page ${pageNumber} - ignoring`);
             return;
@@ -153,6 +156,16 @@ export default function QuestionsPage() {
         searchParams.set(PAGE_SEARCH_PARAMS_KEY, ""+pageNumber);
         setSearchParams(searchParams);
         setCurrentPageNumber(pageNumber);
+    };
+
+    const handlePageSizeClick = (newPageSize: number) => {
+        if (newPageSize === pageSize || !SIZE_OPTIONS.includes(newPageSize)) {
+            console.warn(`Invalid target page size ${newPageSize} - ignoring`);
+            return;
+        }
+        searchParams.set(PAGE_SIZE_SEARCH_PARAMS_KEY, ""+newPageSize);
+        setSearchParams(searchParams);
+        setPageSize(newPageSize);
     };
 
     const contentElement = <div className="text-center col-7 mx-auto border-l">
@@ -172,8 +185,13 @@ export default function QuestionsPage() {
         <div className="col">
             {response.data.map((q, i) => <QuestionPreview key={i} data={q} />)}
         </div>
-        <div className="my-3">
-            <Pagination pagesAmount={response.pagesAmount} currentPage={currentPageNumber} onClickCallback={handlePageClick}/>
+        <div className="my-3 flex flex-row justify-content-between">
+            <Pagination pagesAmount={response.pagesAmount} currentPage={currentPageNumber} onClickCallback={handlePageNumberClick}/>
+            <div>
+                {SIZE_OPTIONS.map((size, i) =>
+                    <PaginationButton key={i} value={size} selectedValue={pageSize} onClickCallback={handlePageSizeClick} />)}
+                <span className="ml-2">per page</span>
+            </div>
         </div>
     </div>;
 

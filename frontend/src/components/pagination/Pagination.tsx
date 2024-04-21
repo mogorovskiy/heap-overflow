@@ -42,19 +42,19 @@ export default function Pagination({pagesAmount, currentPage, onClickCallback}: 
 
         if (currentPageNormalized != START_PAGE) {
             const prevPageNumber = currentPageNormalized - 1;
-            buttons.push(<PaginationButton key={keyCounter++} pageNumber={prevPageNumber} currentPage={currentPageNormalized}
+            buttons.push(<PaginationButton key={keyCounter++} value={prevPageNumber} selectedValue={currentPageNormalized}
                                            onClickCallback={() => onClickCallback(prevPageNumber)} name="Prev" />);
         }
         for (let i = 0; i < pageButtons.length; i++) {
             if (isGap(pageButtons, i)) {
-                buttons.push(<span key={keyCounter++}>...</span>);
+                buttons.push(<button key={keyCounter++} className="mx-2 unselectable" disabled>...</button>);
             }
-            buttons.push(<PaginationButton key={keyCounter++} pageNumber={pageButtons[i]} currentPage={currentPageNormalized}
+            buttons.push(<PaginationButton key={keyCounter++} value={pageButtons[i]} selectedValue={currentPageNormalized}
                                            onClickCallback={() => onClickCallback(pageButtons[i])} />);
         }
         if (currentPageNormalized != pagesAmount) {
             const nextPageNumber = currentPageNormalized + 1;
-            buttons.push(<PaginationButton key={keyCounter++} pageNumber={nextPageNumber} currentPage={currentPageNormalized}
+            buttons.push(<PaginationButton key={keyCounter++} value={nextPageNumber} selectedValue={currentPageNormalized}
                                            onClickCallback={() => onClickCallback(nextPageNumber)} name="Next" />);
         }
 

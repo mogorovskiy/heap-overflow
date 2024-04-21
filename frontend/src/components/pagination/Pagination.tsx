@@ -12,28 +12,56 @@ export default function Pagination({pagesAmount, currentPage, onClickCallback}: 
     const MAX_CONSECUTIVE_BUTTONS = 5;
 
     const currentPageNormalized = currentPage;
-    const pageButtons: number[] = [];
 
-    if (currentPageNormalized < MAX_CONSECUTIVE_BUTTONS) {
-        pageButtons.push(...createNumberList(START_PAGE, MAX_CONSECUTIVE_BUTTONS));
-    } else {
-        pageButtons.push(START_PAGE);
-
+    const createPageNumbers = () => {
+        const pageButtons: number[] = [];
         const half = Math.floor(MAX_CONSECUTIVE_BUTTONS / 2);
-        pageButtons.push(...createNumberList(currentPageNormalized - half, currentPageNormalized + half));
-    }
-    pageButtons.push(pagesAmount);
-
-    const buttons = [];
-    let keyCounter = 0;
-    for (let i = 0; i < pageButtons.length; i++) {
-        if (i > 0 && pageButtons[i] - pageButtons[i - 1] > 1) {
-            buttons.push(<span key={keyCounter++}>...</span>);
+        if (currentPageNormalized < MAX_CONSECUTIVE_BUTTONS) {
+            pageButtons.push(...createNumberList(START_PAGE, MAX_CONSECUTIVE_BUTTONS));
+            pageButtons.push(pagesAmount);
+        } else if (currentPageNormalized > pagesAmount - MAX_CONSECUTIVE_BUTTONS + 1) {
+            pageButtons.push(START_PAGE);
+            pageButtons.push(...createNumberList(pagesAmount - MAX_CONSECUTIVE_BUTTONS + 1, pagesAmount));
+        } else {
+            pageButtons.push(START_PAGE);
+            pageButtons.push(...createNumberList(currentPageNormalized - half, currentPageNormalized + half));
+            pageButtons.push(pagesAmount);
         }
-        buttons.push(<PaginationButton key={keyCounter++} pageNumber={pageButtons[i]} currentPage={currentPageNormalized}
-                                       onClickCallback={() => onClickCallback(pageButtons[i])} />);
-    }
+        return pageButtons;
+    };
+
+    const pageButtons: number[] = createPageNumbers();
+
+    const isGap = (pageButtons: number[], i: number) => {
+        return i > 0 && pageButtons[i] - pageButtons[i - 1] > 1;
+    };
+
+    const createButtons = () => {
+        const buttons = [];
+        let keyCounter = 0;
+
+        if (currentPageNormalized != START_PAGE) {
+            const prevPageNumber = currentPageNormalized - 1;
+            buttons.push(<PaginationButton key={keyCounter++} pageNumber={prevPageNumber} currentPage={currentPageNormalized}
+                                           onClickCallback={() => onClickCallback(prevPageNumber)} name="Prev" />);
+        }
+        for (let i = 0; i < pageButtons.length; i++) {
+            if (isGap(pageButtons, i)) {
+                buttons.push(<span key={keyCounter++}>...</span>);
+            }
+            buttons.push(<PaginationButton key={keyCounter++} pageNumber={pageButtons[i]} currentPage={currentPageNormalized}
+                                           onClickCallback={() => onClickCallback(pageButtons[i])} />);
+        }
+        if (currentPageNormalized != pagesAmount) {
+            const nextPageNumber = currentPageNormalized + 1;
+            buttons.push(<PaginationButton key={keyCounter++} pageNumber={nextPageNumber} currentPage={currentPageNormalized}
+                                           onClickCallback={() => onClickCallback(nextPageNumber)} name="Next" />);
+        }
+
+        return buttons;
+    };
+
     return (<div className="flex flex-row flex-wrap justify-content-center">
-        {buttons}
+        {createButtons()}
     </div>);
 }

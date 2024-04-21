@@ -1,6 +1,7 @@
 package com.kk.heapoverflow.controller;
 
 import com.kk.heapoverflow.dto.question.QuestionResponseDto;
+import com.kk.heapoverflow.dto.question.response.QuestionPreviewPageResponseDto;
 import com.kk.heapoverflow.model.Question;
 import com.kk.heapoverflow.service.QuestionService;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,10 @@ public class QuestionController {
     @GetMapping("/getById")
     public Question getById(@RequestParam Long id) {
         return questionService.getQuestionById(id);
+    }
+
+   @GetMapping("/getPreviewPage")
+    public QuestionPreviewPageResponseDto getQuestionsPreviewPage(Pageable pageable) {
+        return questionService.getQuestionsPreviewPage(pageable);
     }
 }

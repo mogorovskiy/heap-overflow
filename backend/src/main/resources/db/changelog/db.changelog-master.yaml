@@ -5,4 +5,7 @@ databaseChangeLog:
       file: db/changelog/changeset/create-user-table.yaml
   - include:
       file: db/changelog/changeset/create-answer-table.yaml
-
+  - include:
+      file: db/changelog/changeset/create-tag-table.yaml
+  - include:
+      file: db/changelog/changeset/create-tag_question-table.yaml

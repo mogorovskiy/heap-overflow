@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class QuestionMetadataDto {
 
-    Long votes;
-    Long answers;
-    Long views;
+    private Long rating;
+    private Long answers;
+    private Long views;
 }

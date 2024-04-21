@@ -9,9 +9,9 @@ import java.util.List;
 @Setter
 public class QuestionPreviewPageResponseDto {
 
-    Long total;
-    Long pagesAmount;
-    Long currentPage;
-    Long size;
-    List<QuestionPreviewDto> data;
+    private Long total;
+    private Long pagesAmount;
+    private Long currentPage;
+    private Long size;
+    private List<QuestionPreviewDto> data;
 }

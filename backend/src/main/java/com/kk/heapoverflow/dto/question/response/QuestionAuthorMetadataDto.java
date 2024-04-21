@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class QuestionAuthorMetadataDto {
 
-    Long id;
-    String firstName;
-    String lastName;
-    String profilePhotoUrl;
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String profilePhotoUrl;
 }

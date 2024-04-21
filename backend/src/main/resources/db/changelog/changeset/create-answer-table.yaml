@@ -4,7 +4,7 @@ databaseChangeLog:
       author: your_name_here
       changes:
         - createTable:
-            tableName: Answer
+            tableName: answer
             columns:
               - column:
                   name: id

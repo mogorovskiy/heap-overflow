@@ -1,7 +1,7 @@
 import {TagDto} from "../TagDto";
 import {UserMetadataDto} from "../UserMetadataDto";
 import {QuestionMetadataDto} from "./preview/QuestionMetadataDto";
-import {AnswerDto} from "../AnswerDto";
+import {AnswerDto} from "../answer/AnswerDto";
 
 export interface QuestionDto {
     id: number,

@@ -11,7 +11,7 @@ interface QuestionProps {
 export default function Question({data}: QuestionProps) {
     return (
         <div className="flex flex-row gap-x-3 mt-3">
-            <div className="flex flex-col gap-y-3 px-2">
+            <div className="text-center flex flex-col gap-y-3 px-2">
                 <button className="border h-12 w-12" style={{borderRadius: "50%"}}>
                     <svg aria-hidden="true" className="mx-auto" width="18" height="18"
                          viewBox="0 0 18 18">

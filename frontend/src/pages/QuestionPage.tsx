@@ -4,6 +4,7 @@ import {QuestionDto} from "../common/types/question/QuestionDto";
 import {calcHowLongAgoWasCreated} from "../common/utils";
 import React from "react";
 import Question from "../components/Question";
+import Answer from "../components/Answer";
 
 const response: QuestionDto = {
     id: 1,
@@ -66,8 +67,11 @@ const response: QuestionDto = {
                 lastName: "Casse",
                 profilePhotoUrl: "https://www.gravatar.com/avatar/3514f42c8a7ebb09d4e96710f7a5fc5d?s=32&d=identicon&r=PG&f=y&so-version=2"
             },
+            createdAt: "2024-04-18 23:59:59.199999",
+            metadata: {
+                rating: 2,
+            },
         },
-
         {
             id: 1,
             content: "with() would work for this:\n" +
@@ -87,6 +91,10 @@ const response: QuestionDto = {
                 firstName: "Renan",
                 lastName: "Casse",
                 profilePhotoUrl: "https://www.gravatar.com/avatar/3514f42c8a7ebb09d4e96710f7a5fc5d?s=32&d=identicon&r=PG&f=y&so-version=2"
+            },
+            createdAt: "2024-04-19 23:59:59.199999",
+            metadata: {
+                rating: 5,
             },
         }
     ],
@@ -118,6 +126,14 @@ export default function QuestionPage() {
             <div className="mt-3 flex flex-row justify-content-between align-items-center">
                 <p className="display-6 m-0" style={{fontSize: "1.6rem"}}>{response.answers.length} answers</p>
                 <span className="text-danger">todo: add sorting</span>
+            </div>
+            <div>
+                {response.answers.map((answer, i) => <Answer key={i} data={answer} />)}
+            </div>
+            <div className="flex flex-col align-items-start gap-y-4">
+                <p className="display-6 m-0" style={{fontSize: "1.6rem"}}>Your answer</p>
+                <textarea></textarea>
+                <a href="#" className="btn btn-primary">Post Your Answer</a>
             </div>
         </div>
     </div>;

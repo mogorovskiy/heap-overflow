@@ -1,17 +1,16 @@
-import {QuestionDto} from "../common/types/question/QuestionDto";
-import Tags from "./Tags";
 import {formatDateTime} from "../common/utils";
 import {PAGES} from "../common/constants";
 import React from "react";
+import {AnswerDto} from "../common/types/answer/AnswerDto";
 
 interface AnswerProps {
-    data: QuestionDto
+    data: AnswerDto
 }
 
 export default function Answer({data}: AnswerProps) {
-    return (
-        <div className="flex flex-row gap-x-3 mt-3">
-            <div className="flex flex-col gap-y-3 px-2">
+    return (<>
+        <div className="flex flex-row gap-x-3 mt-5">
+            <div className="text-center flex flex-col gap-y-3 px-2">
                 <button className="border h-12 w-12" style={{borderRadius: "50%"}}>
                     <svg aria-hidden="true" className="mx-auto" width="18" height="18"
                          viewBox="0 0 18 18">
@@ -28,10 +27,9 @@ export default function Answer({data}: AnswerProps) {
             </div>
             <div className="flex flex-col">
                 <p>{data.content}</p>
-                <Tags data={data.tags}/>
                 <div className="flex justify-content-end mt-3">
-                    <div className="bg-primary-subtle rounded p-2 small">
-                        <span className="text-secondary">asked {formatDateTime(data.askedAt)}</span>
+                    <div className="rounded p-2 small">
+                        <span className="text-secondary">answered {formatDateTime(data.createdAt)}</span>
                         <div className="flex flex-row align-items-center gap-x-2">
                             <img src={data.author.profilePhotoUrl}
                                  alt="" className="w-5 h-5" />
@@ -43,5 +41,7 @@ export default function Answer({data}: AnswerProps) {
                 </div>
             </div>
         </div>
+        <hr />
+        </>
     );
 }

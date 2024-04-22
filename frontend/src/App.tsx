@@ -5,13 +5,15 @@ import {PAGES} from "./common/constants";
 import QuestionsPage from "./pages/QuestionsPage";
 import HomePage from "./pages/HomePage";
 import NoPage from "./pages/NoPage";
+import QuestionPage from "./pages/QuestionPage";
 
 export default function App() {
   return (<BrowserRouter>
     <Routes>
-      <Route path={PAGES.questions} element={<QuestionsPage />}/>
       <Route index element={<HomePage />} />
       <Route path="*" element={<NoPage />} />
+      <Route path={PAGES.questions} element={<QuestionsPage />}/>
+      <Route path={PAGES.questions + "/:questionId"} element={<QuestionPage />} />
     </Routes>
   </BrowserRouter>);
 }

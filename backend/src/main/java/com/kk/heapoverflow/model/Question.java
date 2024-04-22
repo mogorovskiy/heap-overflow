@@ -11,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Question extends BaseModel {
+
     @Column(nullable = false)
     private String title;
 

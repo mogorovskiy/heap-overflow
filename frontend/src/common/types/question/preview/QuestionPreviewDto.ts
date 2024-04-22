@@ -1,5 +1,5 @@
 import {QuestionMetadataDto} from "./QuestionMetadataDto";
-import {QuestionAuthorMetadataDto} from "./QuestionAuthorMetadataDto";
+import {UserMetadataDto} from "../../UserMetadataDto";
 import {TagDto} from "../../TagDto";
 
 export interface QuestionPreviewDto {
@@ -8,6 +8,6 @@ export interface QuestionPreviewDto {
     contentShort: string,
     askedAt: string,
     tags: TagDto[],
-    author: QuestionAuthorMetadataDto,
+    author: UserMetadataDto,
     metadata: QuestionMetadataDto,
 }

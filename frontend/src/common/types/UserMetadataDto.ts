@@ -1,4 +1,4 @@
-export interface QuestionAuthorMetadataDto {
+export interface UserMetadataDto {
     id: number,
     firstName: string,
     lastName: string,

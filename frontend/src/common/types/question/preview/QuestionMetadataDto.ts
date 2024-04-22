@@ -1,5 +1,5 @@
 export interface QuestionMetadataDto {
-    votes: number,
+    rating: number,
     answers: number,
     views: number,
 }

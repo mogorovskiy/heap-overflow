@@ -1,12 +1,13 @@
-import PageWithHeader from "./PageWithHeader";
+import PageWithHeader from "../PageWithHeader";
 import {useParams} from "react-router-dom";
-import {QuestionDto} from "../common/types/question/QuestionDto";
-import {calcHowLongAgoWasCreated} from "../common/utils";
+import {QuestionDto} from "../../common/types/question/QuestionDto";
+import {calcHowLongAgoWasCreated} from "../../common/utils";
 import React, {FormEvent, useState} from "react";
-import Question from "../components/Question";
-import Answer from "../components/Answer";
-import TextareaMarkdownEditor from "../components/TextareaMarkdownEditor";
-import {CreateAnswerRequest} from "../common/types/answer/request/CreateAnswerRequest";
+import Question from "../../components/Question";
+import Answer from "../../components/Answer";
+import TextareaMarkdownEditor from "../../components/TextareaMarkdownEditor";
+import {CreateAnswerRequest} from "../../common/types/answer/request/CreateAnswerRequest";
+import {PAGES} from "../../common/constants";
 
 const response: QuestionDto = {
     id: 1,
@@ -201,7 +202,7 @@ export default function QuestionPage() {
                     <p className="display-6" style={{fontSize: "2.2rem"}}>{response.title}</p>
                 </div>
                 <div>
-                    <a href="#" className="btn btn-primary">Ask Question</a>
+                    <a href={PAGES.askQuestion} className="btn btn-primary">Ask Question</a>
                 </div>
             </div>
             <div>

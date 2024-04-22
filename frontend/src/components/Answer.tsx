@@ -1,13 +1,25 @@
 import {formatDateTime} from "../common/utils";
 import {PAGES} from "../common/constants";
-import React from "react";
-import {AnswerDto} from "../common/types/answer/AnswerDto";
+import React, {useEffect, useState} from "react";
+import {AnswerDto} from "../common/types/answer/response/AnswerDto";
+import {marked} from "marked";
 
 interface AnswerProps {
     data: AnswerDto
 }
 
 export default function Answer({data}: AnswerProps) {
+    const [markdownParsed, setMarkdownParsed] = useState("");
+
+    useEffect(() => {
+        const parseMarkdown = async () => {
+            const html = await marked(data.content);
+            setMarkdownParsed(html);
+        };
+
+        parseMarkdown();
+    }, []);
+
     return (<>
         <div className="flex flex-row gap-x-3 mt-5">
             <div className="text-center flex flex-col gap-y-3 px-2">
@@ -26,7 +38,7 @@ export default function Answer({data}: AnswerProps) {
                 </button>
             </div>
             <div className="flex flex-col">
-                <p>{data.content}</p>
+                <p dangerouslySetInnerHTML={{ __html: markdownParsed}} className="markdown" />
                 <div className="flex justify-content-end mt-3">
                     <div className="rounded p-2 small">
                         <span className="text-secondary">answered {formatDateTime(data.createdAt)}</span>

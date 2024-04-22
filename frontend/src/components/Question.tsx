@@ -1,14 +1,26 @@
 import Tags from "./Tags";
 import {formatDateTime} from "../common/utils";
 import {PAGES} from "../common/constants";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {QuestionDto} from "../common/types/question/QuestionDto";
+import { marked } from "marked";
 
 interface QuestionProps {
     data: QuestionDto
 }
 
 export default function Question({data}: QuestionProps) {
+    const [markdownParsed, setMarkdownParsed] = useState("");
+
+    useEffect(() => {
+        const parseMarkdown = async () => {
+            const html = await marked(data.content);
+            setMarkdownParsed(html);
+        };
+
+        parseMarkdown();
+    }, []);
+
     return (
         <div className="flex flex-row gap-x-3 mt-3">
             <div className="text-center flex flex-col gap-y-3 px-2">
@@ -27,7 +39,7 @@ export default function Question({data}: QuestionProps) {
                 </button>
             </div>
             <div className="flex flex-col">
-                <p>{data.content}</p>
+                <p dangerouslySetInnerHTML={{ __html: markdownParsed}} className="markdown" />
                 <Tags data={data.tags}/>
                 <div className="flex justify-content-end mt-3">
                     <div className="bg-primary-subtle rounded p-2 small">

@@ -1,4 +1,4 @@
-import {UserMetadataDto} from "../UserMetadataDto";
+import {UserMetadataDto} from "../../UserMetadataDto";
 import {AnswerMetadataDto} from "./AnswerMetadataDto";
 
 export interface AnswerDto {

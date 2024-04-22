@@ -1,4 +1,4 @@
-import {QuestionPreviewDto} from "../common/types/question/preview/QuestionPreviewDto";
+import {QuestionPreviewDto} from "../common/types/question/response/preview/QuestionPreviewDto";
 import {PAGES} from "../common/constants";
 import {calcHowLongAgoWasCreated} from "../common/utils";
 import React from "react";

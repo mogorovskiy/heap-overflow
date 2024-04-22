@@ -60,7 +60,7 @@ export default function TextareaMarkdownEditor({handleChange}: TextareaMarkdownE
             </div>
             <textarea className="w-100 h-24 m-0 p-0 border-top d-block bg-transparent px-2 py-1" style={{outline: "none"}}
                 value={value} onChange={({target}) => setValue(target.value)}
-                ref={textareaRef} >
+                ref={textareaRef} required minLength={20}>
             </textarea>
         </div>
     );

@@ -1,12 +1,13 @@
-import PageWithHeader from "./PageWithHeader";
+import PageWithHeader from "../PageWithHeader";
 import {useParams} from "react-router-dom";
-import {QuestionDto} from "../common/types/question/QuestionDto";
-import {calcHowLongAgoWasCreated} from "../common/utils";
+import {QuestionDto} from "../../common/types/question/response/QuestionDto";
+import {calcHowLongAgoWasCreated} from "../../common/utils";
 import React, {FormEvent, useState} from "react";
-import Question from "../components/Question";
-import Answer from "../components/Answer";
-import TextareaMarkdownEditor from "../components/TextareaMarkdownEditor";
-import {CreateAnswerRequest} from "../common/types/answer/request/CreateAnswerRequest";
+import Question from "../../components/Question";
+import Answer from "../../components/Answer";
+import TextareaMarkdownEditor from "../../components/TextareaMarkdownEditor";
+import {CreateAnswerRequest} from "../../common/types/answer/request/CreateAnswerRequest";
+import {PAGES} from "../../common/constants";
 
 const response: QuestionDto = {
     id: 1,
@@ -109,7 +110,7 @@ const response: QuestionDto = {
         "![jest](https://img.shields.io/badge/jest-C21325?style=for-the-badge&logo=jest&logoColor=white)\n",
     askedAt: "2024-04-18 23:59:59.199999",
     tags: [
-        {name: "python"},
+            {name: "python"},
             {name: "tensorflow"},
             {name: "coreml"},
             {name: "flite"},
@@ -201,7 +202,7 @@ export default function QuestionPage() {
                     <p className="display-6" style={{fontSize: "2.2rem"}}>{response.title}</p>
                 </div>
                 <div>
-                    <a href="#" className="btn btn-primary">Ask Question</a>
+                    <a href={PAGES.askQuestion} className="btn btn-primary">Ask Question</a>
                 </div>
             </div>
             <div>

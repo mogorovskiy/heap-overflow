@@ -30,3 +30,11 @@ code {
 .markdown ol {
   list-style-type: decimal!important;
 }
+
+.header {
+  height: 5rem;
+}
+
+.height-no-header {
+  min-height: calc(100vh - 5rem);
+}

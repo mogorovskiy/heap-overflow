@@ -9,7 +9,7 @@ export default function PageWithHeader({contentElement} : PageWithHeaderProps) {
     return (
         <div>
             <Header />
-            <div>
+            <div className="bg-body-tertiary height-no-header">
                 {contentElement}
             </div>
         </div>

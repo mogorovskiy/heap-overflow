@@ -1,9 +1,9 @@
-import {TagDto} from "../common/types/TagDto";
 import Tag from "./Tag";
 import React from "react";
+import {TagResponseDto} from "../common/types/tag/response/TagResponseDto";
 
 interface TagsProps {
-    data: TagDto[];
+    data: TagResponseDto[];
 }
 
 export default function Tags({data}: TagsProps) {

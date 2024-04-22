@@ -1,10 +1,11 @@
-import PageWithHeader from "./PageWithHeader";
-import QuestionPreview from "../components/QuestionPreview";
-import {QuestionPreviewPageableDto} from "../common/types/pageable/QuestionPreviewPageableDto";
-import Pagination from "../components/pagination/Pagination";
+import PageWithHeader from "../PageWithHeader";
+import QuestionPreview from "../../components/QuestionPreview";
+import {QuestionPreviewPageableDto} from "../../common/types/pageable/QuestionPreviewPageableDto";
+import Pagination from "../../components/pagination/Pagination";
 import { useSearchParams } from 'react-router-dom';
 import {useState} from "react";
-import PaginationButton from "../components/pagination/PaginationButton";
+import PaginationButton from "../../components/pagination/PaginationButton";
+import {PAGES} from "../../common/constants";
 
 const response: QuestionPreviewPageableDto = {
     total: 100,
@@ -172,7 +173,7 @@ export default function QuestionsPage() {
         <div className="px-4">
             <div className="flex flex-row justify-content-between align-items-center py-4">
                 <span className="display-6" style={{fontSize: "2.2rem"}}>All questions</span>
-                <a href="#" className="btn btn-primary">Ask Question</a>
+                <a href={PAGES.askQuestion} className="btn btn-primary">Ask Question</a>
             </div>
             <div className="flex flex-row justify-content-between pt-2">
                 <div>

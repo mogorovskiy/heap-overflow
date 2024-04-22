@@ -1,6 +1,6 @@
 import PageWithHeader from "../PageWithHeader";
 import {useParams} from "react-router-dom";
-import {QuestionDto} from "../../common/types/question/QuestionDto";
+import {QuestionDto} from "../../common/types/question/response/QuestionDto";
 import {calcHowLongAgoWasCreated} from "../../common/utils";
 import React, {FormEvent, useState} from "react";
 import Question from "../../components/Question";
@@ -110,7 +110,7 @@ const response: QuestionDto = {
         "![jest](https://img.shields.io/badge/jest-C21325?style=for-the-badge&logo=jest&logoColor=white)\n",
     askedAt: "2024-04-18 23:59:59.199999",
     tags: [
-        {name: "python"},
+            {name: "python"},
             {name: "tensorflow"},
             {name: "coreml"},
             {name: "flite"},

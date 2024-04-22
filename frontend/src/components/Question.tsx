@@ -2,7 +2,7 @@ import Tags from "./Tags";
 import {formatDateTime} from "../common/utils";
 import {PAGES} from "../common/constants";
 import React, {useEffect, useState} from "react";
-import {QuestionDto} from "../common/types/question/QuestionDto";
+import {QuestionDto} from "../common/types/question/response/QuestionDto";
 import { marked } from "marked";
 
 interface QuestionProps {

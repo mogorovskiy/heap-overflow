@@ -1,4 +1,4 @@
-import {QuestionPreviewDto} from "../question/preview/QuestionPreviewDto";
+import {QuestionPreviewDto} from "../question/response/preview/QuestionPreviewDto";
 
 // first page = 0
 export interface QuestionPreviewPageableDto {

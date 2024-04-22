@@ -1,7 +1,7 @@
-import {TagDto} from "../common/types/TagDto";
+import {TagResponseDto} from "../common/types/tag/response/TagResponseDto";
 
 interface TagProps {
-    data: TagDto
+    data: TagResponseDto
 }
 
 export default function Tag({data}: TagProps) {

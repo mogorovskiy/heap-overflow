@@ -31,7 +31,7 @@ const response: QuestionPreviewPageableDto = {
                 profilePhotoUrl: "https://www.gravatar.com/avatar/3514f42c8a7ebb09d4e96710f7a5fc5d?s=32&d=identicon&r=PG&f=y&so-version=2"
             },
             metadata: {
-                votes: 0,
+                rating: 0,
                 answers: 2,
                 views: 0,
             },
@@ -55,7 +55,7 @@ const response: QuestionPreviewPageableDto = {
                 profilePhotoUrl: "https://www.gravatar.com/avatar/3514f42c8a7ebb09d4e96710f7a5fc5d?s=32&d=identicon&r=PG&f=y&so-version=2"
             },
             metadata: {
-                votes: 0,
+                rating: 0,
                 answers: 2,
                 views: 0,
             },
@@ -79,7 +79,7 @@ const response: QuestionPreviewPageableDto = {
                 profilePhotoUrl: "https://www.gravatar.com/avatar/3514f42c8a7ebb09d4e96710f7a5fc5d?s=32&d=identicon&r=PG&f=y&so-version=2"
             },
             metadata: {
-                votes: 0,
+                rating: 0,
                 answers: 2,
                 views: 0,
             },
@@ -103,7 +103,7 @@ const response: QuestionPreviewPageableDto = {
                 profilePhotoUrl: "https://www.gravatar.com/avatar/3514f42c8a7ebb09d4e96710f7a5fc5d?s=32&d=identicon&r=PG&f=y&so-version=2"
             },
             metadata: {
-                votes: 0,
+                rating: 0,
                 answers: 2,
                 views: 0,
             },
@@ -127,7 +127,7 @@ const response: QuestionPreviewPageableDto = {
                 profilePhotoUrl: "https://www.gravatar.com/avatar/3514f42c8a7ebb09d4e96710f7a5fc5d?s=32&d=identicon&r=PG&f=y&so-version=2"
             },
             metadata: {
-                votes: 0,
+                rating: 0,
                 answers: 2,
                 views: 0,
             },
@@ -170,7 +170,7 @@ export default function QuestionsPage() {
 
     const contentElement = <div className="text-center col-7 mx-auto border-l">
         <div className="px-4">
-            <div className="flex flex-row justify-content-between py-4">
+            <div className="flex flex-row justify-content-between align-items-center py-4">
                 <span className="display-6" style={{fontSize: "2.2rem"}}>All questions</span>
                 <a href="#" className="btn btn-primary">Ask Question</a>
             </div>
@@ -179,7 +179,7 @@ export default function QuestionsPage() {
                     <span className="mr-1">{response.total}</span>
                     <span>questions</span>
                 </div>
-                <span className="text-danger">add sorting, filters here...</span>
+                <span className="text-danger">todo: add sorting, filters here</span>
             </div>
         </div>
         <div className="col">

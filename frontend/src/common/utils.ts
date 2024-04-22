@@ -44,6 +44,11 @@ export function calcHowLongAgoWasCreated(createdDatetime: string): string {
     return date.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' });
 }
 
+export function formatDateTime(dateTime: string): string {
+    return new Date(dateTime)
+        .toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' });
+}
+
 export function createNumberList(from: number, to: number): number[] {
     let list = [];
     for (let i = from; i <= to; i++) {

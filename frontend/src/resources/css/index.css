@@ -22,3 +22,11 @@ code {
   -ms-user-select: none; /* IE 10+ */
   user-select: none;
 }
+
+.markdown ul {
+  list-style: initial!important;
+}
+
+.markdown ol {
+  list-style-type: decimal!important;
+}

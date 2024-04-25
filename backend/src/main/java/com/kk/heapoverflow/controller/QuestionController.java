@@ -1,7 +1,7 @@
 package com.kk.heapoverflow.controller;
 
+import com.kk.heapoverflow.dto.question.response.QuestionByIdDto;
 import com.kk.heapoverflow.dto.question.response.QuestionPreviewPageResponseDto;
-import com.kk.heapoverflow.model.Question;
 import com.kk.heapoverflow.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ public class QuestionController {
     private final QuestionService questionService;
 
     @GetMapping("/{id}")
-    public Question getById(@RequestParam Long id) {
+    public QuestionByIdDto getById(@RequestParam Long id) {
         return questionService.getQuestionById(id);
     }
 

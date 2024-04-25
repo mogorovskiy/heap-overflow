@@ -1,6 +1,7 @@
 package com.kk.heapoverflow.service.impl;
 
 import com.kk.heapoverflow.dto.question.response.QuestionAuthorMetadataDto;
+import com.kk.heapoverflow.dto.question.response.QuestionByIdDto;
 import com.kk.heapoverflow.dto.question.response.QuestionMetadataDto;
 import com.kk.heapoverflow.dto.question.response.QuestionPreviewDto;
 import com.kk.heapoverflow.dto.question.response.QuestionPreviewPageResponseDto;
@@ -27,9 +28,24 @@ public class QuestionServiceImpl implements QuestionService {
     private static final int MAX_CONTENT_PREVIEW_LENGTH = 100;
 
     @Override
-    public Question getQuestionById(Long questionId) {
+    public QuestionByIdDto getQuestionById(Long questionId) {
         Optional<Question> questionOptional = questionRepository.findById(questionId);
-        return questionOptional.orElse(null);
+        Question question = questionOptional.get();
+
+        return mapToQuestionDto(question);
+    }
+
+    private QuestionByIdDto mapToQuestionDto(Question question) {
+        QuestionByIdDto questionDto = new QuestionByIdDto();
+        questionDto.setId(question.getId());
+        questionDto.setTitle(question.getTitle());
+        questionDto.setContent(question.getContent());
+        questionDto.setAskedAt(question.getAskedAt());
+        questionDto.setAuthor(mapToAuthorMetadataDto(question.getAuthor()));
+        questionDto.setTags(mapToTagDtos(question.getTags()));
+        questionDto.setMetadata(mapToMetadataDto(question));
+        questionDto.setAnswers(mapToAnswerDto(question.getAnswers()));
+        return questionDto;
     }
 
     @Override

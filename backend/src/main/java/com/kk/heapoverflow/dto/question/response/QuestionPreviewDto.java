@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class QuestionPreviewDto {
+
     private Long id;
     private String title;
     private String contentShort;

@@ -41,7 +41,7 @@ public class Question extends BaseModel {
     )
     private List<Tag> tags;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL) //TODO mappedBy
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answers;
 
     @Column(nullable = false)

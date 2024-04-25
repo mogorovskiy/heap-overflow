@@ -19,6 +19,4 @@ public class Tag {
 
     @Column(nullable = false)
     private String name;
-
-    //TODO: read about relationship of tables
 }

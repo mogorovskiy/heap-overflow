@@ -19,7 +19,7 @@ public class QuestionController {
 
     private final QuestionService questionService;
 
-    @GetMapping("/getById")
+    @GetMapping("/{id}")
     public Question getById(@RequestParam Long id) {
         return questionService.getQuestionById(id);
     }

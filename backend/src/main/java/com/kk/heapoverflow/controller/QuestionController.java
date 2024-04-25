@@ -28,6 +28,4 @@ public class QuestionController {
     public QuestionPreviewPageResponseDto getQuestionsPreviewPage(Pageable pageable) {
         return questionService.getQuestionsPreviewPage(pageable);
     }
-
-    //TODO: почитать про REST контроллер (сериализация в json)!!!
 }

@@ -1,12 +1,10 @@
 package com.kk.heapoverflow.dto.question.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 public class QuestionPreviewPageResponseDto {
 
     private Long total;

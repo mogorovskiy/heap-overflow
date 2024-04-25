@@ -22,8 +22,10 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class QuestionServiceImpl implements QuestionService {
+
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
+    private static final int MAX_CONTENT_PREVIEW_LENGTH = 100;
 
     @Override
     public Question getQuestionById(Long questionId) {
@@ -33,21 +35,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionPreviewPageResponseDto getQuestionsPreviewPage(Pageable pageable) {
-
         Page<Question> questionPage = questionRepository.findAll(pageable);
         List<QuestionPreviewDto> questionPreviews = questionPage.getContent().stream()
-                .map(question -> {
-                    QuestionPreviewDto previewDto = new QuestionPreviewDto();
-                    previewDto.setId(question.getId());
-                    previewDto.setTitle(question.getTitle());
-                    previewDto.setContentShort(question.getContent().substring(0, Math.min(question.getContent().length(), 100))); //TODO 100
-                    previewDto.setAskedAt(question.getCreatedAt());
-                    previewDto.setTags(question.getTags().stream().map(tag -> new QuestionTagDto(tag.getName())).toArray(QuestionTagDto[]::new));
-                    previewDto.setAuthor(mapToAuthorMetadataDto(question.getAuthor()));
-                    previewDto.setMetadata(mapToMetadataDto(question));
-                    return previewDto;
-                })
-                .collect(Collectors.toList());
+                .map(question -> mapToQuestionPreviewDto(question)).toList();
 
         QuestionPreviewPageResponseDto pageDto = new QuestionPreviewPageResponseDto();
         pageDto.setTotal(questionPage.getTotalElements());
@@ -78,5 +68,17 @@ public class QuestionServiceImpl implements QuestionService {
         questionMetadataDto.setRating(question.getRating());
 
         return questionMetadataDto;
+    }
+
+    private QuestionPreviewDto mapToQuestionPreviewDto(Question question) {
+        QuestionPreviewDto previewDto = new QuestionPreviewDto();
+        previewDto.setId(question.getId());
+        previewDto.setTitle(question.getTitle());
+        previewDto.setContentShort(question.getContent().substring(0, Math.min(question.getContent().length(), MAX_CONTENT_PREVIEW_LENGTH)));
+        previewDto.setAskedAt(question.getCreatedAt());
+        previewDto.setTags(question.getTags().stream().map(tag -> new QuestionTagDto(tag.getName())).toArray(QuestionTagDto[]::new));
+        previewDto.setAuthor(mapToAuthorMetadataDto(question.getAuthor()));
+        previewDto.setMetadata(mapToMetadataDto(question));
+        return previewDto;
     }
 }

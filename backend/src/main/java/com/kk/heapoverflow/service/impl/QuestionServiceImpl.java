@@ -1,6 +1,8 @@
 package com.kk.heapoverflow.service.impl;
 
+import com.kk.heapoverflow.dto.answer.response.AnswerAuthorMetadataDto;
 import com.kk.heapoverflow.dto.answer.response.AnswerMainDto;
+import com.kk.heapoverflow.dto.answer.response.AnswerMetadataDto;
 import com.kk.heapoverflow.dto.question.response.QuestionAuthorMetadataDto;
 import com.kk.heapoverflow.dto.question.response.QuestionByIdDto;
 import com.kk.heapoverflow.dto.question.response.QuestionMetadataDto;
@@ -18,9 +20,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -47,18 +51,44 @@ public class QuestionServiceImpl implements QuestionService {
         questionDto.setAuthor(mapToAuthorMetadataDto(question.getAuthor()));
         questionDto.setTags(Arrays.stream(question.getTags().stream().map(tag -> new QuestionTagDto(tag.getName())).toArray(QuestionTagDto[]::new)).toList());
         questionDto.setMetadata(mapToMetadataDto(question));
-        questionDto.setAnswers(mapToAnswerDto(question.getAnswers()));
+        questionDto.setAnswers(question.getAnswers().stream()
+                .map(this::mapToAnswerDto)
+                .toList());
 
         return questionDto;
     }
 
     private AnswerMainDto mapToAnswerDto(Answer answer) {
         AnswerMainDto answerMainDto = new AnswerMainDto();
+
         answerMainDto.setId(answer.getId());
         answerMainDto.setCreatedAt(answer.getCreatedAt());
-        answerMainDto.setAuthor(mapUserToAuthorMetadataDto(answer.getAuthor()));
+        answerMainDto.setAuthor(mapAnswerToAuthorMetadataDto(answer.getAuthor()));
+        answerMainDto.setContent(answer.getContent());
+        answerMainDto.setMetadata(mapToAnswerMetadataDto(answer));
 
         return answerMainDto;
+    }
+
+    private AnswerMetadataDto mapToAnswerMetadataDto(Answer answer) {
+        AnswerMetadataDto answerMetadataDto = new AnswerMetadataDto();
+
+        answerMetadataDto.setAnswers(answerRepository.countByQuestionId(answer.getId()));
+        answerMetadataDto.setViews(answer.getViews());
+        answerMetadataDto.setRating(answer.getRating());
+
+        return answerMetadataDto;
+    }
+
+    private AnswerAuthorMetadataDto mapAnswerToAuthorMetadataDto(User user) {
+        AnswerAuthorMetadataDto answerAuthorMetadataDto = new AnswerAuthorMetadataDto();
+
+        answerAuthorMetadataDto.setFirstName(user.getFirstName());
+        answerAuthorMetadataDto.setLastName(user.getLastName());
+        answerAuthorMetadataDto.setId(user.getId());
+        answerAuthorMetadataDto.setProfilePhotoUrl(user.getProfilePhotoUrl());
+
+        return answerAuthorMetadataDto;
     }
 
     @Override
@@ -84,13 +114,13 @@ public class QuestionServiceImpl implements QuestionService {
         previewDto.setContentShort(question.getContent().substring(0, Math.min(question.getContent().length(), MAX_CONTENT_PREVIEW_LENGTH)));
         previewDto.setAskedAt(question.getCreatedAt());
         previewDto.setTags(question.getTags().stream().map(tag -> new QuestionTagDto(tag.getName())).toArray(QuestionTagDto[]::new));
-        previewDto.setAuthor(mapUserToAuthorMetadataDto(question.getAuthor()));
-        previewDto.setMetadata(mapToMetadataDto(question));
+        previewDto.setAuthor(mapQuestionToAuthorMetadataDto(question.getAuthor()));
+        previewDto.setMetadata(mapToQuestionMetadataDto(question));
 
         return previewDto;
     }
 
-    private QuestionAuthorMetadataDto mapUserToAuthorMetadataDto(User user) {
+    private QuestionAuthorMetadataDto mapQuestionToAuthorMetadataDto(User user) {
         QuestionAuthorMetadataDto questionAuthorMetadataDto = new QuestionAuthorMetadataDto();
 
         questionAuthorMetadataDto.setFirstName(user.getFirstName());
@@ -101,7 +131,7 @@ public class QuestionServiceImpl implements QuestionService {
         return questionAuthorMetadataDto;
     }
 
-    private QuestionMetadataDto mapToMetadataDto(Question question) {
+    private QuestionMetadataDto mapToQuestionMetadataDto(Question question) {
         QuestionMetadataDto questionMetadataDto = new QuestionMetadataDto();
 
         questionMetadataDto.setAnswers(answerRepository.countByQuestionId(question.getId()));

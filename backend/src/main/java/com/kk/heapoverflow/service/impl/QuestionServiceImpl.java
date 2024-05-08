@@ -20,11 +20,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -44,13 +42,15 @@ public class QuestionServiceImpl implements QuestionService {
 
     private QuestionByIdDto mapToQuestionDto(Question question) {
         QuestionByIdDto questionDto = new QuestionByIdDto();
+
         questionDto.setId(question.getId());
         questionDto.setTitle(question.getTitle());
         questionDto.setContent(question.getContent());
-        questionDto.setAskedAt(question.getAskedAt());
-        questionDto.setAuthor(mapToAuthorMetadataDto(question.getAuthor()));
-        questionDto.setTags(Arrays.stream(question.getTags().stream().map(tag -> new QuestionTagDto(tag.getName())).toArray(QuestionTagDto[]::new)).toList());
-        questionDto.setMetadata(mapToMetadataDto(question));
+        questionDto.setAskedAt(question.getCreatedAt()); //TODO: ???
+        questionDto.setAuthor(mapQuestionToAuthorMetadataDto(question.getAuthor()));
+        questionDto.setTags(Arrays.stream(question.getTags().stream().map(tag ->
+                new QuestionTagDto(tag.getName())).toArray(QuestionTagDto[]::new)).toList());
+        questionDto.setMetadata(mapToQuestionMetadataDto(question));
         questionDto.setAnswers(question.getAnswers().stream()
                 .map(this::mapToAnswerDto)
                 .toList());

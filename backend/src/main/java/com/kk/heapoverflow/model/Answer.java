@@ -28,6 +28,4 @@ public class Answer extends BaseModel {
 
     @Column(nullable = false)
     private Long rating;
-
-
 }

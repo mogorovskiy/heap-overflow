@@ -3,12 +3,14 @@ package com.kk.heapoverflow.service.impl;
 import com.kk.heapoverflow.dto.answer.response.AnswerAuthorMetadataDto;
 import com.kk.heapoverflow.dto.answer.response.AnswerMainDto;
 import com.kk.heapoverflow.dto.answer.response.AnswerMetadataDto;
+import com.kk.heapoverflow.dto.question.request.QuestionRequestDto;
 import com.kk.heapoverflow.dto.question.response.QuestionAuthorMetadataDto;
 import com.kk.heapoverflow.dto.question.response.QuestionByIdDto;
 import com.kk.heapoverflow.dto.question.response.QuestionMetadataDto;
 import com.kk.heapoverflow.dto.question.response.QuestionPreviewDto;
 import com.kk.heapoverflow.dto.question.response.QuestionPreviewPageResponseDto;
 import com.kk.heapoverflow.dto.question.response.QuestionTagDto;
+import com.kk.heapoverflow.mapper.QuestionMapper;
 import com.kk.heapoverflow.model.Answer;
 import com.kk.heapoverflow.model.Question;
 import com.kk.heapoverflow.model.User;
@@ -31,6 +33,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
+    private final QuestionMapper questionMapper;
     private static final int MAX_CONTENT_PREVIEW_LENGTH = 100;
 
     @Override
@@ -105,6 +108,12 @@ public class QuestionServiceImpl implements QuestionService {
         pageDto.setData(questionPreviews);
 
         return pageDto;
+    }
+
+    @Override
+    public Question saveQuestion(QuestionRequestDto questionRequestDto) {
+        Question question = questionMapper.toModel(questionRequestDto);
+        return questionRepository.save(question);
     }
 
     private QuestionPreviewDto mapToQuestionPreviewDto(Question question) {

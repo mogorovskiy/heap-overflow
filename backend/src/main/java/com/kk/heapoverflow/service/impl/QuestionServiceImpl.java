@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -35,9 +36,8 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public QuestionByIdDto getQuestionById(Long questionId) {
         Optional<Question> questionOptional = questionRepository.findById(questionId);
-        Question question = questionOptional.get();
 
-        return mapToQuestionDto(question);
+        return mapToQuestionDto(questionOptional.orElseThrow(() -> new NoSuchElementException("No question in id: " + questionId)));
     }
 
     private QuestionByIdDto mapToQuestionDto(Question question) {
@@ -46,7 +46,7 @@ public class QuestionServiceImpl implements QuestionService {
         questionDto.setId(question.getId());
         questionDto.setTitle(question.getTitle());
         questionDto.setContent(question.getContent());
-        questionDto.setAskedAt(question.getCreatedAt()); //TODO: ???
+        questionDto.setAskedAt(question.getCreatedAt());
         questionDto.setAuthor(mapQuestionToAuthorMetadataDto(question.getAuthor()));
         questionDto.setTags(Arrays.stream(question.getTags().stream().map(tag ->
                 new QuestionTagDto(tag.getName())).toArray(QuestionTagDto[]::new)).toList());

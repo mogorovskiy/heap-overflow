@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 @Builder
 public class UserRegistrationRequestDto {
+
     @Email
     private String email;
 

@@ -5,6 +5,7 @@ import com.kk.heapoverflow.dto.user.response.UserResponseDto;
 import java.time.LocalDateTime;
 
 public record QuestionResponseDto(
+
         Long id,
         LocalDateTime createdAt,
         String title,

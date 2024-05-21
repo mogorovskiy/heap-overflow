@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_tag_question_table
+      author: mogorovskiy
+      changes:
+        - createTable:
+            tableName: tag_question
+            columns:
+              - column:
+                  name: question_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    references: question(id)
+                    foreignKeyName: fk_tag_question_question_id
+                    deleteCascade: true
+                    primaryKey: true
+              - column:
+                  name: tag_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    references: tag(id)
+                    foreignKeyName: fk_tag_question_tag_id
+                    deleteCascade: true
+                    primaryKey: true
+                primaryKey:
+                  columnNames: tag_id, question_id

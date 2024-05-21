@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
       id: create-answer-table
-      author: your_name_here
+      author: mogorovskiy
       changes:
         - createTable:
-            tableName: Answer
+            tableName: answer
             columns:
               - column:
                   name: id

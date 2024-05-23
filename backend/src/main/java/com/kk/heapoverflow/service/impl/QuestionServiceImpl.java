@@ -127,6 +127,8 @@ public class QuestionServiceImpl implements QuestionService {
         Question question = questionMapper.toModel(questionRequestDto);
         question.setAuthor(author);
         question.setCreatedAt(LocalDateTime.now());
+        question.setRating(0L);
+        question.setViews(0L);
 
         return questionRepository.save(question);
     }

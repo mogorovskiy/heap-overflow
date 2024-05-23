@@ -35,6 +35,6 @@ public class QuestionController {
 
     @PostMapping("/new")
     public Question createQuestion(@RequestBody QuestionRequestDto questionRequestDto) {
-        return questionService.saveQuestion(questionRequestDto);
+        return questionService.createQuestion(questionRequestDto);
     }
 }

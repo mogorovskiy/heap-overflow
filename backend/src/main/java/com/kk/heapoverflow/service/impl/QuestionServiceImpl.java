@@ -16,12 +16,17 @@ import com.kk.heapoverflow.model.Question;
 import com.kk.heapoverflow.model.User;
 import com.kk.heapoverflow.repostitory.AnswerRepository;
 import com.kk.heapoverflow.repostitory.QuestionRepository;
+import com.kk.heapoverflow.repostitory.UserRepository;
 import com.kk.heapoverflow.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -33,6 +38,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
+    private final UserRepository userRepository;
     private final QuestionMapper questionMapper;
     private static final int MAX_CONTENT_PREVIEW_LENGTH = 100;
 
@@ -111,8 +117,17 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question saveQuestion(QuestionRequestDto questionRequestDto) {
+    public Question createQuestion(QuestionRequestDto questionRequestDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+
+        User author = userRepository.findByEmail(currentUserName)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + currentUserName));
+
         Question question = questionMapper.toModel(questionRequestDto);
+        question.setAuthor(author);
+        question.setCreatedAt(LocalDateTime.now());
+
         return questionRepository.save(question);
     }
 

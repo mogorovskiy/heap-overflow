@@ -12,5 +12,5 @@ public interface QuestionService {
 
     QuestionPreviewPageResponseDto getQuestionsPreviewPage(Pageable pageable);
 
-    Question saveQuestion(QuestionRequestDto questionRequestDto);
+    Question createQuestion(QuestionRequestDto questionRequestDto);
 }

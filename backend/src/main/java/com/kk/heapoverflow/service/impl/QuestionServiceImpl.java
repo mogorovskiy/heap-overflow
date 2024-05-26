@@ -3,6 +3,7 @@ package com.kk.heapoverflow.service.impl;
 import com.kk.heapoverflow.dto.answer.response.AnswerAuthorMetadataDto;
 import com.kk.heapoverflow.dto.answer.response.AnswerMainDto;
 import com.kk.heapoverflow.dto.answer.response.AnswerMetadataDto;
+import com.kk.heapoverflow.dto.question.QuestionResponseDto;
 import com.kk.heapoverflow.dto.question.request.QuestionRequestDto;
 import com.kk.heapoverflow.dto.question.response.QuestionAuthorMetadataDto;
 import com.kk.heapoverflow.dto.question.response.QuestionByIdDto;
@@ -46,7 +47,7 @@ public class QuestionServiceImpl implements QuestionService {
     public QuestionByIdDto getQuestionById(Long questionId) {
         Optional<Question> questionOptional = questionRepository.findById(questionId);
 
-        return mapToQuestionDto(questionOptional.orElseThrow(() -> new NoSuchElementException("No question in id: " + questionId)));
+        return mapToQuestionDto(questionOptional.orElseThrow(() -> new NoSuchElementException("Can’t find any question by given id: " + questionId)));
     }
 
     private QuestionByIdDto mapToQuestionDto(Question question) {
@@ -117,7 +118,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question createQuestion(QuestionRequestDto questionRequestDto) {
+    public QuestionResponseDto createQuestion(QuestionRequestDto questionRequestDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
 
@@ -130,7 +131,16 @@ public class QuestionServiceImpl implements QuestionService {
         question.setRating(0L);
         question.setViews(0L);
 
-        return questionRepository.save(question);
+        Question savedQuestion = questionRepository.save(question);
+
+        return new QuestionResponseDto(
+                savedQuestion.getId(),
+                savedQuestion.getCreatedAt(),
+                savedQuestion.getTitle(),
+                savedQuestion.getContent(),
+                savedQuestion.getViews(),
+                savedQuestion.getAuthor()
+        );
     }
 
     private QuestionPreviewDto mapToQuestionPreviewDto(Question question) {

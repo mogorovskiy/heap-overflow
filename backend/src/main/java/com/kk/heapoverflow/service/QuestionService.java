@@ -1,9 +1,9 @@
 package com.kk.heapoverflow.service;
 
+import com.kk.heapoverflow.dto.question.QuestionResponseDto;
 import com.kk.heapoverflow.dto.question.request.QuestionRequestDto;
 import com.kk.heapoverflow.dto.question.response.QuestionByIdDto;
 import com.kk.heapoverflow.dto.question.response.QuestionPreviewPageResponseDto;
-import com.kk.heapoverflow.model.Question;
 import org.springframework.data.domain.Pageable;
 
 public interface QuestionService {
@@ -12,5 +12,5 @@ public interface QuestionService {
 
     QuestionPreviewPageResponseDto getQuestionsPreviewPage(Pageable pageable);
 
-    Question createQuestion(QuestionRequestDto questionRequestDto);
+    QuestionResponseDto createQuestion(QuestionRequestDto questionRequestDto);
 }

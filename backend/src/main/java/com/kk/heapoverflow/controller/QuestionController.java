@@ -1,5 +1,6 @@
 package com.kk.heapoverflow.controller;
 
+import com.kk.heapoverflow.dto.question.QuestionResponseDto;
 import com.kk.heapoverflow.dto.question.request.QuestionRequestDto;
 import com.kk.heapoverflow.dto.question.response.QuestionByIdDto;
 import com.kk.heapoverflow.dto.question.response.QuestionPreviewPageResponseDto;
@@ -33,8 +34,8 @@ public class QuestionController {
         return questionService.getQuestionsPreviewPage(pageable);
     }
 
-    @PostMapping("/new")
-    public Question createQuestion(@RequestBody QuestionRequestDto questionRequestDto) {
+    @PostMapping
+    public QuestionResponseDto createQuestion(@RequestBody QuestionRequestDto questionRequestDto) {
         return questionService.createQuestion(questionRequestDto);
     }
 }

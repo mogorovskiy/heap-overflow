@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class QuestionByIdDto {
 
-    private long id;
+    private Long id;
     private String title;
     private String content;
     private LocalDateTime askedAt;

@@ -24,8 +24,8 @@ public class Answer extends BaseModel {
     private Question question;
 
     @Column(nullable = false)
-    private Long views;
+    private Long views = 0L;
 
     @Column(nullable = false)
-    private Long rating;
+    private Long rating = 0L;
 }

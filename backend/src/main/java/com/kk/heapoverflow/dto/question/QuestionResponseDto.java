@@ -1,7 +1,5 @@
 package com.kk.heapoverflow.dto.question;
 
-import com.kk.heapoverflow.dto.user.response.UserResponseDto;
-
 import java.time.LocalDateTime;
 
 public record QuestionResponseDto(
@@ -11,5 +9,6 @@ public record QuestionResponseDto(
         String title,
         String content,
         Long views,
-        UserResponseDto author
-) {}
+        com.kk.heapoverflow.model.User author
+) {
+}

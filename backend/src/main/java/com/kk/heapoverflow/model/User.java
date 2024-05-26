@@ -16,6 +16,7 @@ import static java.util.Collections.singleton;
 @Getter
 @Setter
 public class User extends BaseModel implements UserDetails {
+
     @Column(nullable = false)
     private String firstName;
 

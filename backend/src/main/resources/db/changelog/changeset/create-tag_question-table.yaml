@@ -14,7 +14,6 @@ databaseChangeLog:
                     references: question(id)
                     foreignKeyName: fk_tag_question_question_id
                     deleteCascade: true
-                    primaryKey: true
               - column:
                   name: tag_id
                   type: bigint
@@ -23,6 +22,5 @@ databaseChangeLog:
                     references: tag(id)
                     foreignKeyName: fk_tag_question_tag_id
                     deleteCascade: true
-                    primaryKey: true
-                primaryKey:
-                  columnNames: tag_id, question_id
+            primaryKey:
+              columnNames: tag_id, question_id

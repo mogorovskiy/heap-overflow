@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.NoSuchElementException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -26,5 +28,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({HttpMessageNotReadableException.class})
     public ErrorResponse handleBadRequest(Throwable ex, WebRequest request) {
         return new ErrorResponse("Bad request: " + ex.getMessage());
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ExceptionHandler({NoSuchElementException.class})
+    public ErrorResponse handleNoContent(Throwable ex, WebRequest request) {
+        return new ErrorResponse("No content: " + ex.getMessage());
     }
 }

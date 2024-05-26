@@ -11,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Answer extends BaseModel {
+
     @Column(nullable = false)
     private String content;
 
@@ -21,4 +22,10 @@ public class Answer extends BaseModel {
     @ManyToOne
     @JoinColumn(name = "question_id", nullable = false)
     private Question question;
+
+    @Column(nullable = false)
+    private Long views = 0L;
+
+    @Column(nullable = false)
+    private Long rating = 0L;
 }

@@ -8,9 +8,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.List;
@@ -27,7 +25,7 @@ public class Question extends BaseModel {
     private String content;
 
     @Column(nullable = false)
-    private Long views;
+    private Long views = 0L;
 
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
@@ -45,5 +43,5 @@ public class Question extends BaseModel {
     private List<Answer> answers;
 
     @Column(nullable = false)
-    private Long rating;
+    private Long rating = 0L;
 }

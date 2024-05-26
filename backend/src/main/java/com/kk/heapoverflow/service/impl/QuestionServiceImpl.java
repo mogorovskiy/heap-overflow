@@ -1,23 +1,37 @@
 package com.kk.heapoverflow.service.impl;
 
+import com.kk.heapoverflow.dto.answer.response.AnswerAuthorMetadataDto;
+import com.kk.heapoverflow.dto.answer.response.AnswerMainDto;
+import com.kk.heapoverflow.dto.answer.response.AnswerMetadataDto;
+import com.kk.heapoverflow.dto.question.QuestionResponseDto;
+import com.kk.heapoverflow.dto.question.request.QuestionRequestDto;
 import com.kk.heapoverflow.dto.question.response.QuestionAuthorMetadataDto;
+import com.kk.heapoverflow.dto.question.response.QuestionByIdDto;
 import com.kk.heapoverflow.dto.question.response.QuestionMetadataDto;
 import com.kk.heapoverflow.dto.question.response.QuestionPreviewDto;
 import com.kk.heapoverflow.dto.question.response.QuestionPreviewPageResponseDto;
 import com.kk.heapoverflow.dto.question.response.QuestionTagDto;
+import com.kk.heapoverflow.mapper.QuestionMapper;
+import com.kk.heapoverflow.model.Answer;
 import com.kk.heapoverflow.model.Question;
 import com.kk.heapoverflow.model.User;
 import com.kk.heapoverflow.repostitory.AnswerRepository;
 import com.kk.heapoverflow.repostitory.QuestionRepository;
+import com.kk.heapoverflow.repostitory.UserRepository;
 import com.kk.heapoverflow.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,12 +39,66 @@ public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
+    private final UserRepository userRepository;
+    private final QuestionMapper questionMapper;
     private static final int MAX_CONTENT_PREVIEW_LENGTH = 100;
 
     @Override
-    public Question getQuestionById(Long questionId) {
+    public QuestionByIdDto getQuestionById(Long questionId) {
         Optional<Question> questionOptional = questionRepository.findById(questionId);
-        return questionOptional.orElse(null);
+
+        return mapToQuestionDto(questionOptional.orElseThrow(() -> new NoSuchElementException("Can’t find any question by given id: " + questionId)));
+    }
+
+    private QuestionByIdDto mapToQuestionDto(Question question) {
+        QuestionByIdDto questionDto = new QuestionByIdDto();
+
+        questionDto.setId(question.getId());
+        questionDto.setTitle(question.getTitle());
+        questionDto.setContent(question.getContent());
+        questionDto.setAskedAt(question.getCreatedAt());
+        questionDto.setAuthor(mapQuestionToAuthorMetadataDto(question.getAuthor()));
+        questionDto.setTags(Arrays.stream(question.getTags().stream().map(tag ->
+                new QuestionTagDto(tag.getName())).toArray(QuestionTagDto[]::new)).toList());
+        questionDto.setMetadata(mapToQuestionMetadataDto(question));
+        questionDto.setAnswers(question.getAnswers().stream()
+                .map(this::mapToAnswerDto)
+                .toList());
+
+        return questionDto;
+    }
+
+    private AnswerMainDto mapToAnswerDto(Answer answer) {
+        AnswerMainDto answerMainDto = new AnswerMainDto();
+
+        answerMainDto.setId(answer.getId());
+        answerMainDto.setCreatedAt(answer.getCreatedAt());
+        answerMainDto.setAuthor(mapAnswerToAuthorMetadataDto(answer.getAuthor()));
+        answerMainDto.setContent(answer.getContent());
+        answerMainDto.setMetadata(mapToAnswerMetadataDto(answer));
+
+        return answerMainDto;
+    }
+
+    private AnswerMetadataDto mapToAnswerMetadataDto(Answer answer) {
+        AnswerMetadataDto answerMetadataDto = new AnswerMetadataDto();
+
+        answerMetadataDto.setAnswers(answerRepository.countByQuestionId(answer.getId()));
+        answerMetadataDto.setViews(answer.getViews());
+        answerMetadataDto.setRating(answer.getRating());
+
+        return answerMetadataDto;
+    }
+
+    private AnswerAuthorMetadataDto mapAnswerToAuthorMetadataDto(User user) {
+        AnswerAuthorMetadataDto answerAuthorMetadataDto = new AnswerAuthorMetadataDto();
+
+        answerAuthorMetadataDto.setFirstName(user.getFirstName());
+        answerAuthorMetadataDto.setLastName(user.getLastName());
+        answerAuthorMetadataDto.setId(user.getId());
+        answerAuthorMetadataDto.setProfilePhotoUrl(user.getProfilePhotoUrl());
+
+        return answerAuthorMetadataDto;
     }
 
     @Override
@@ -49,7 +117,46 @@ public class QuestionServiceImpl implements QuestionService {
         return pageDto;
     }
 
-    private QuestionAuthorMetadataDto mapToAuthorMetadataDto(User user) {
+    @Override
+    public QuestionResponseDto createQuestion(QuestionRequestDto questionRequestDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+
+        User author = userRepository.findByEmail(currentUserName)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + currentUserName));
+
+        Question question = questionMapper.toModel(questionRequestDto);
+        question.setAuthor(author);
+        question.setCreatedAt(LocalDateTime.now());
+        question.setRating(0L);
+        question.setViews(0L);
+
+        Question savedQuestion = questionRepository.save(question);
+
+        return new QuestionResponseDto(
+                savedQuestion.getId(),
+                savedQuestion.getCreatedAt(),
+                savedQuestion.getTitle(),
+                savedQuestion.getContent(),
+                savedQuestion.getViews(),
+                savedQuestion.getAuthor()
+        );
+    }
+
+    private QuestionPreviewDto mapToQuestionPreviewDto(Question question) {
+        QuestionPreviewDto previewDto = new QuestionPreviewDto();
+        previewDto.setId(question.getId());
+        previewDto.setTitle(question.getTitle());
+        previewDto.setContentShort(question.getContent().substring(0, Math.min(question.getContent().length(), MAX_CONTENT_PREVIEW_LENGTH)));
+        previewDto.setAskedAt(question.getCreatedAt());
+        previewDto.setTags(question.getTags().stream().map(tag -> new QuestionTagDto(tag.getName())).toArray(QuestionTagDto[]::new));
+        previewDto.setAuthor(mapQuestionToAuthorMetadataDto(question.getAuthor()));
+        previewDto.setMetadata(mapToQuestionMetadataDto(question));
+
+        return previewDto;
+    }
+
+    private QuestionAuthorMetadataDto mapQuestionToAuthorMetadataDto(User user) {
         QuestionAuthorMetadataDto questionAuthorMetadataDto = new QuestionAuthorMetadataDto();
 
         questionAuthorMetadataDto.setFirstName(user.getFirstName());
@@ -60,7 +167,7 @@ public class QuestionServiceImpl implements QuestionService {
         return questionAuthorMetadataDto;
     }
 
-    private QuestionMetadataDto mapToMetadataDto(Question question) {
+    private QuestionMetadataDto mapToQuestionMetadataDto(Question question) {
         QuestionMetadataDto questionMetadataDto = new QuestionMetadataDto();
 
         questionMetadataDto.setAnswers(answerRepository.countByQuestionId(question.getId()));
@@ -68,17 +175,5 @@ public class QuestionServiceImpl implements QuestionService {
         questionMetadataDto.setRating(question.getRating());
 
         return questionMetadataDto;
-    }
-
-    private QuestionPreviewDto mapToQuestionPreviewDto(Question question) {
-        QuestionPreviewDto previewDto = new QuestionPreviewDto();
-        previewDto.setId(question.getId());
-        previewDto.setTitle(question.getTitle());
-        previewDto.setContentShort(question.getContent().substring(0, Math.min(question.getContent().length(), MAX_CONTENT_PREVIEW_LENGTH)));
-        previewDto.setAskedAt(question.getCreatedAt());
-        previewDto.setTags(question.getTags().stream().map(tag -> new QuestionTagDto(tag.getName())).toArray(QuestionTagDto[]::new));
-        previewDto.setAuthor(mapToAuthorMetadataDto(question.getAuthor()));
-        previewDto.setMetadata(mapToMetadataDto(question));
-        return previewDto;
     }
 }
